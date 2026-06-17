@@ -54,3 +54,19 @@ export function formatMonthYear(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
+
+/**
+ * Format a number compactly (e.g., 10M, 150k).
+ * @param {number} value
+ * @returns {string} e.g., "10M" or "150k"
+ */
+export function formatCompactNumber(value) {
+  const absValue = Math.abs(value);
+  if (absValue >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`;
+  }
+  if (absValue >= 1_000) {
+    return `${(value / 1_000).toFixed(0)}k`;
+  }
+  return value.toString();
+}

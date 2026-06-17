@@ -40,6 +40,11 @@ export function FinanceProvider({ children }) {
     });
   }
 
+  function resetAllData() {
+    setTransactions([]);
+    setBudgets([]);
+  }
+
   // --- Computed Values ---
 
   const computed = useMemo(() => {
@@ -133,6 +138,7 @@ export function FinanceProvider({ children }) {
     addTransaction,
     deleteTransaction,
     updateBudget,
+    resetAllData,
     setBudgets,
     ...computed,
   };

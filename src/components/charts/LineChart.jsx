@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Area,
 } from 'recharts';
+import { formatCompactNumber } from '../../utils/formatters';
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -45,7 +46,7 @@ export default function LineChartComponent({ data, height = 300 }) {
           axisLine={false}
           tickLine={false}
           tick={{ fill: 'var(--color-text-muted)', fontSize: 11 }}
-          tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+          tickFormatter={formatCompactNumber}
           width={50}
         />
         <Tooltip content={<CustomTooltip />} />
