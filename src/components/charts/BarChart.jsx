@@ -27,7 +27,7 @@ function CustomTooltip({ active, payload, label }) {
 export default function BarChartComponent({ data, height = 300 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <RechartsBarChart data={data} margin={{ top: 5, right: 5, left: -10, bottom: 5 }}>
+      <RechartsBarChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-default)" opacity={0.2} vertical={false} />
         <XAxis
           dataKey="month"
@@ -40,7 +40,7 @@ export default function BarChartComponent({ data, height = 300 }) {
           tickLine={false}
           tick={{ fill: 'var(--color-text-muted)', fontSize: 11 }}
           tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
-          width={40}
+          width={50}
         />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
         <Legend

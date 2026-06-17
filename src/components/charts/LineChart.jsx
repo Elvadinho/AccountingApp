@@ -27,7 +27,7 @@ function CustomTooltip({ active, payload, label }) {
 export default function LineChartComponent({ data, height = 300 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <RechartsLineChart data={data} margin={{ top: 5, right: 5, left: -10, bottom: 5 }}>
+      <RechartsLineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
         <defs>
           <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--color-accent-green)" stopOpacity={0.2} />
@@ -46,7 +46,7 @@ export default function LineChartComponent({ data, height = 300 }) {
           tickLine={false}
           tick={{ fill: 'var(--color-text-muted)', fontSize: 11 }}
           tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
-          width={40}
+          width={50}
         />
         <Tooltip content={<CustomTooltip />} />
         <Area

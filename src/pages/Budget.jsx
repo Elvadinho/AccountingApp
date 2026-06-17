@@ -114,20 +114,20 @@ export default function Budget() {
           </div>
           <div className="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-6 mt-4 md:mt-0">
             <div className="text-left md:text-center flex-1 min-w-[100px]">
-              <p className="text-xs text-[var(--color-text-muted)]">Total Budget</p>
-              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-green)]">
+              <p className="text-xs text-[var(--color-text-muted)] whitespace-nowrap">Total Budget</p>
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-green)] whitespace-nowrap">
                 {formatCurrency(totalBudget)}
               </p>
             </div>
             <div className="text-left md:text-center flex-1 min-w-[100px]">
-              <p className="text-xs text-[var(--color-text-muted)]">Total Spent</p>
-              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-red)]">
+              <p className="text-xs text-[var(--color-text-muted)] whitespace-nowrap">Total Spent</p>
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-red)] whitespace-nowrap">
                 {formatCurrency(totalSpent)}
               </p>
             </div>
             <div className="text-left md:text-center flex-1 min-w-[100px]">
-              <p className="text-xs text-[var(--color-text-muted)]">Remaining</p>
-              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-yellow)]">
+              <p className="text-xs text-[var(--color-text-muted)] whitespace-nowrap">Remaining</p>
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-yellow)] whitespace-nowrap">
                 {formatCurrency(totalBudget - totalSpent)}
               </p>
             </div>
