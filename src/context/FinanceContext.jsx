@@ -45,6 +45,11 @@ export function FinanceProvider({ children }) {
     setBudgets([]);
   }
 
+  function restoreMockData() {
+    setTransactions(seedTransactions);
+    setBudgets(seedBudgets);
+  }
+
   // --- Computed Values ---
 
   const computed = useMemo(() => {
@@ -139,6 +144,7 @@ export function FinanceProvider({ children }) {
     deleteTransaction,
     updateBudget,
     resetAllData,
+    restoreMockData,
     setBudgets,
     ...computed,
   };

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Menu, Bell, User, Trash2, Settings, AlertTriangle } from 'lucide-react';
+import { Menu, Bell, User, Trash2, Settings, AlertTriangle, RefreshCw } from 'lucide-react';
 import { useLayout } from './Layout';
 import { useFinance } from '../../context/FinanceContext';
 import Modal from '../ui/Modal';
@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 
 export default function TopBar({ title }) {
   const { setIsSidebarOpen } = useLayout();
-  const { resetAllData } = useFinance();
+  const { resetAllData, restoreMockData } = useFinance();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -70,6 +70,16 @@ export default function TopBar({ title }) {
               <button className="w-full text-left px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-tertiary)] transition-colors flex items-center gap-2">
                 <Settings className="w-4 h-4" />
                 Settings
+              </button>
+              <button 
+                onClick={() => {
+                  restoreMockData();
+                  setIsDropdownOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 text-sm text-[var(--color-accent-blue)] hover:bg-[var(--color-accent-blue-glow)] transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Restore Demo Data
               </button>
               <div className="h-px bg-[var(--color-border-default)] my-1" />
               <button 
