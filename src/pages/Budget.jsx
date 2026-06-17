@@ -61,11 +61,11 @@ function BudgetCard({ budget, onUpdate }) {
 
       {/* Spent / Limit */}
       <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-mono" style={{ color: barColor }}>
+        <span className="text-sm font-mono text-[var(--color-accent-red)]">
           {formatCurrency(spent)}
         </span>
         <span className="text-xs text-[var(--color-text-muted)]">of</span>
-        <span className="text-sm font-mono text-[var(--color-text-secondary)]">
+        <span className="text-sm font-mono text-[var(--color-accent-green)]">
           {formatCurrency(limit)}
         </span>
       </div>
@@ -112,28 +112,22 @@ export default function Budget() {
               Track your spending against budget limits for the current month
             </p>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="text-center">
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-6 mt-4 md:mt-0">
+            <div className="text-left md:text-center flex-1 min-w-[100px]">
               <p className="text-xs text-[var(--color-text-muted)]">Total Budget</p>
-              <p className="text-lg font-bold font-mono text-[var(--color-text-primary)]">
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-green)]">
                 {formatCurrency(totalBudget)}
               </p>
             </div>
-            <div className="text-center">
+            <div className="text-left md:text-center flex-1 min-w-[100px]">
               <p className="text-xs text-[var(--color-text-muted)]">Total Spent</p>
-              <p className="text-lg font-bold font-mono text-[var(--color-accent-yellow)]">
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-red)]">
                 {formatCurrency(totalSpent)}
               </p>
             </div>
-            <div className="text-center">
+            <div className="text-left md:text-center flex-1 min-w-[100px]">
               <p className="text-xs text-[var(--color-text-muted)]">Remaining</p>
-              <p
-                className={`text-lg font-bold font-mono ${
-                  totalBudget - totalSpent >= 0
-                    ? 'text-[var(--color-accent-green)]'
-                    : 'text-[var(--color-accent-red)]'
-                }`}
-              >
+              <p className="text-base md:text-lg font-bold font-mono text-[var(--color-accent-yellow)]">
                 {formatCurrency(totalBudget - totalSpent)}
               </p>
             </div>

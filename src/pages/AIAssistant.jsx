@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Check, Plus, AlertCircle } from 'lucide-react';
+import { Send, Bot, User, Check, Plus, AlertCircle, Sparkles } from 'lucide-react';
 import PageWrapper from '../components/layout/PageWrapper';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
@@ -32,7 +32,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm your MyMoney AI Assistant. I can answer financial questions, help you categorize expenses, or even log transactions for you. Try saying: *'I spent 20,000 XAF on groceries yesterday.'*",
+      content: "Hey there! 👋 I'm your MyMoney AI assistant. Tell me about any expense and I'll log it for you. Try: \"I spent 20,000 XAF on groceries yesterday\"",
     },
   ]);
   const [input, setInput] = useState('');
@@ -68,25 +68,33 @@ export default function AIAssistant() {
     setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
-    const apiMessages = messages
-      .filter((m) => !m.parsedTransaction) // Exclude internal state from API
-      .concat({ role: 'user', content: userMessage });
+    try {
+      const apiMessages = messages
+        .filter((m) => !m.parsedTransaction)
+        .concat({ role: 'user', content: userMessage });
 
-    const response = await askClaude(apiMessages, SYSTEM_PROMPT);
+      const response = await askClaude(apiMessages, SYSTEM_PROMPT);
+      const parsedTx = parseTransactionFromJson(response);
 
-    const parsedTx = parseTransactionFromJson(response);
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: 'assistant',
-        content: response.replace(/```json\n[\s\S]*?\n```/, '').trim() || 'I found a transaction in your message!',
-        parsedTransaction: parsedTx,
-      },
-    ]);
-
-    setIsLoading(true);
-    setIsLoading(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: response.replace(/```json\n[\s\S]*?\n```/, '').trim() || 'I found a transaction in your message!',
+          parsedTransaction: parsedTx,
+        },
+      ]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Sorry, something went wrong. Please try again.',
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAddTransaction = (tx, index) => {
@@ -95,7 +103,6 @@ export default function AIAssistant() {
       date: new Date().toISOString(),
     });
 
-    // Mark as added in the message history
     setMessages((prev) =>
       prev.map((msg, i) =>
         i === index ? { ...msg, transactionAdded: true } : msg
@@ -103,31 +110,37 @@ export default function AIAssistant() {
     );
   };
 
+  const quickPrompts = [
+    "I spent 5000 on lunch",
+    "How can I save more?",
+    "I earned 100,000 salary",
+  ];
+
   return (
     <PageWrapper title="AI Assistant">
-      <div className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col gap-4">
-        
+      <div className="max-w-3xl mx-auto flex flex-col" style={{ height: 'calc(100vh - 180px)' }}>
+
         {/* Warning about API Key */}
         {!import.meta.env.VITE_CLAUDE_API_KEY && (
-          <div className="bg-[var(--color-accent-red-glow)] border border-[var(--color-accent-red)] rounded-lg p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-[var(--color-accent-red)] shrink-0 mt-0.5" />
+          <div className="bg-[var(--color-accent-yellow-glow)] border border-[var(--color-accent-yellow)]/40 rounded-xl p-4 flex items-start gap-3 mb-4 animate-fade-in">
+            <AlertCircle className="w-5 h-5 text-[var(--color-accent-yellow)] shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-semibold text-[var(--color-accent-red)]">Missing API Key</p>
-              <p className="text-xs text-[var(--color-accent-red)] mt-1 opacity-90">
-                You need to add <code className="bg-black/20 px-1 rounded">VITE_CLAUDE_API_KEY</code> to your <code className="bg-black/20 px-1 rounded">.env</code> file for the AI to work.
+              <p className="text-sm font-semibold text-[var(--color-text-primary)]">API Key Required</p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+                Add <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded text-[var(--color-accent-green)] font-mono">VITE_CLAUDE_API_KEY</code> to your <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded font-mono">.env</code> file.
               </p>
             </div>
           </div>
         )}
 
-        <Card className="flex-1 flex flex-col overflow-hidden p-0">
+        <Card className="flex-1 flex flex-col overflow-hidden !p-0 min-h-0">
           {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-6 space-y-5">
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex gap-4 max-w-[85%] ${
-                  msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''
+                className={`flex gap-3 animate-fade-in ${
+                  msg.role === 'user' ? 'flex-row-reverse' : ''
                 }`}
               >
                 {/* Avatar */}
@@ -135,23 +148,23 @@ export default function AIAssistant() {
                   className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                     msg.role === 'user'
                       ? 'bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)]'
-                      : 'bg-[var(--color-accent-green-glow)] border border-[var(--color-accent-green)]/30'
+                      : 'bg-gradient-to-br from-[var(--color-accent-green)] to-[var(--color-accent-blue)] shadow-sm'
                   }`}
                 >
                   {msg.role === 'user' ? (
                     <User className="w-4 h-4 text-[var(--color-text-secondary)]" />
                   ) : (
-                    <Bot className="w-4 h-4 text-[var(--color-accent-green)]" />
+                    <Bot className="w-4 h-4 text-white" />
                   )}
                 </div>
 
                 {/* Bubble */}
-                <div className="flex flex-col gap-2">
+                <div className={`flex flex-col gap-2 max-w-[85%] sm:max-w-[75%] min-w-0`}>
                   <div
-                    className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                    className={`px-4 py-3 rounded-2xl text-sm leading-relaxed break-words ${
                       msg.role === 'user'
-                        ? 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] rounded-tr-sm'
-                        : 'bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] rounded-tl-sm'
+                        ? 'bg-[var(--color-accent-green)] text-[var(--color-bg-primary)] font-medium rounded-tr-md'
+                        : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] rounded-tl-md'
                     }`}
                   >
                     {msg.content}
@@ -159,10 +172,13 @@ export default function AIAssistant() {
 
                   {/* Parsed Transaction Card */}
                   {msg.parsedTransaction && (
-                    <div className="mt-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] rounded-xl p-4 shadow-sm w-72">
-                      <p className="text-xs font-semibold text-[var(--color-text-secondary)] mb-3 uppercase tracking-wider">
-                        Suggested Transaction
-                      </p>
+                    <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-xl p-4 shadow-[var(--shadow-card)] w-full sm:w-72 animate-fade-in">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-green)]" />
+                        <p className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider">
+                          Suggested Transaction
+                        </p>
+                      </div>
                       <div className="space-y-2 mb-4">
                         <div className="flex justify-between text-sm">
                           <span className="text-[var(--color-text-muted)]">Type</span>
@@ -172,7 +188,7 @@ export default function AIAssistant() {
                         </div>
                         <div className="flex justify-between text-sm">
                           <span className="text-[var(--color-text-muted)]">Amount</span>
-                          <span className="font-mono font-medium text-[var(--color-accent-red)]">
+                          <span className="font-mono font-bold text-[var(--color-text-primary)]">
                             {msg.parsedTransaction.amount.toLocaleString()} XAF
                           </span>
                         </div>
@@ -191,9 +207,9 @@ export default function AIAssistant() {
                       </div>
 
                       {msg.transactionAdded ? (
-                        <Button variant="ghost" className="w-full" disabled>
-                          <Check className="w-4 h-4" /> Added to Ledger
-                        </Button>
+                        <div className="w-full py-2 rounded-lg bg-[var(--color-accent-green-glow)] text-[var(--color-accent-green)] text-sm font-medium flex items-center justify-center gap-2">
+                          <Check className="w-4 h-4" /> Added to Ledger ✓
+                        </div>
                       ) : (
                         <Button
                           variant="primary"
@@ -211,35 +227,50 @@ export default function AIAssistant() {
             
             {/* Loading State */}
             {isLoading && (
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-[var(--color-accent-green-glow)] border border-[var(--color-accent-green)]/30 flex items-center justify-center shrink-0">
-                  <Bot className="w-4 h-4 text-[var(--color-accent-green)]" />
+              <div className="flex gap-3 animate-fade-in">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-accent-green)] to-[var(--color-accent-blue)] flex items-center justify-center shrink-0 shadow-sm">
+                  <Bot className="w-4 h-4 text-white" />
                 </div>
-                <div className="px-4 py-3 rounded-2xl bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-tl-sm flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="px-5 py-3.5 rounded-2xl bg-[var(--color-bg-tertiary)] rounded-tl-md flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Quick Prompts */}
+          {messages.length <= 1 && (
+            <div className="px-4 md:px-6 pb-2 flex flex-wrap gap-2">
+              {quickPrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  onClick={() => setInput(prompt)}
+                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:border-[var(--color-accent-green)] hover:text-[var(--color-accent-green)] transition-all cursor-pointer"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Input Area */}
-          <div className="p-4 border-t border-[var(--color-border-default)] bg-[var(--color-bg-secondary)]">
+          <div className="p-3 md:p-4 border-t border-[var(--color-border-default)] bg-[var(--color-bg-secondary)]">
             <form onSubmit={handleSend} className="relative">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about your finances or say 'I spent 5000 on coffee'..."
-                className="w-full pl-4 pr-12 py-3 rounded-xl bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] transition-colors"
+                placeholder="Tell me about an expense or ask a question..."
+                className="w-full pl-4 pr-12 py-3 rounded-xl bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all placeholder:text-[var(--color-text-muted)]"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-[var(--color-accent-green)] hover:bg-[var(--color-accent-green-glow)] transition-colors disabled:opacity-50 disabled:hover:bg-transparent cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-[var(--color-accent-green)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-green-hover)] transition-all disabled:opacity-30 disabled:bg-transparent disabled:text-[var(--color-text-muted)] cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>

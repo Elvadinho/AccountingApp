@@ -12,7 +12,7 @@ import Badge from '../components/ui/Badge';
 import BarChartComponent from '../components/charts/BarChart';
 import { useFinance } from '../context/FinanceContext';
 import { formatCurrency, formatDate } from '../utils/formatters';
-import { getCategoryColor } from '../utils/categories';
+import { getCategoryByName, getCategoryColor } from '../utils/categories';
 
 function StatCard({ icon: Icon, label, value, trend, trendLabel, color }) {
   return (
@@ -51,7 +51,10 @@ function StatCard({ icon: Icon, label, value, trend, trendLabel, color }) {
 
 function BudgetProgressBar({ category, spent, limit }) {
   const percentage = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0;
-  const color =
+  const catInfo = getCategoryByName(category);
+  const CatIcon = catInfo?.icon;
+  const catColor = getCategoryColor(category);
+  const barColor =
     percentage >= 100
       ? 'var(--color-accent-red)'
       : percentage >= 70
@@ -60,11 +63,19 @@ function BudgetProgressBar({ category, spent, limit }) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-[var(--color-text-secondary)] w-24 truncate">{category}</span>
+      {CatIcon && (
+        <div
+          className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+          style={{ backgroundColor: `${catColor}15` }}
+        >
+          <CatIcon className="w-3.5 h-3.5" style={{ color: catColor }} />
+        </div>
+      )}
+      <span className="text-sm text-[var(--color-text-secondary)] w-20 truncate">{category}</span>
       <div className="flex-1 h-2 rounded-full bg-[var(--color-bg-tertiary)] overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${percentage}%`, backgroundColor: color }}
+          style={{ width: `${percentage}%`, backgroundColor: barColor }}
         />
       </div>
       <span className="text-xs font-mono text-[var(--color-text-muted)] w-12 text-right">
@@ -88,7 +99,7 @@ export default function Dashboard() {
   return (
     <PageWrapper title="Dashboard">
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard
           icon={Wallet}
           label="Net Balance"
@@ -115,18 +126,20 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Charts & Lists Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Monthly Bar Chart */}
-        <Card className="lg:col-span-2">
-          <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4">
+      {/* Charts & Lists Row — chart takes more space on large screens */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        {/* Monthly Bar Chart — bigger on large screens */}
+        <Card className="lg:col-span-3 flex flex-col">
+          <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4 shrink-0">
             Income vs Expenses
           </h2>
-          <BarChartComponent data={monthlyData} height={280} />
+          <div className="h-[360px] lg:h-[400px] w-full">
+            <BarChartComponent data={monthlyData} height="100%" />
+          </div>
         </Card>
 
         {/* Budget Overview */}
-        <Card>
+        <Card className="lg:col-span-2">
           <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4">
             Budget Overview
           </h2>
@@ -148,44 +161,57 @@ export default function Dashboard() {
         <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4">
           Recent Transactions
         </h2>
-        <div className="space-y-2">
-          {recentTransactions.map((t) => (
-            <div
-              key={t.id}
-              className="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-[var(--color-bg-tertiary)] transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: `${getCategoryColor(t.category)}15` }}
-                >
+        <div className="space-y-1">
+          {recentTransactions.map((t) => {
+            const catInfo = getCategoryByName(t.category);
+            const CatIcon = catInfo?.icon;
+            const catColor = getCategoryColor(t.category);
+
+            return (
+              <div
+                key={t.id}
+                className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-[var(--color-bg-tertiary)] transition-colors"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  {/* Category Icon */}
                   <div
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: getCategoryColor(t.category) }}
-                  />
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: `${catColor}15` }}
+                  >
+                    {CatIcon ? (
+                      <CatIcon className="w-5 h-5" style={{ color: catColor }} />
+                    ) : (
+                      <div
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: catColor }}
+                      />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-[var(--color-text-primary)] truncate">
+                      {t.description}
+                    </p>
+                    <p className="text-xs text-[var(--color-text-muted)] mt-0.5">{formatDate(t.date)}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-[var(--color-text-primary)]">
-                    {t.description}
-                  </p>
-                  <p className="text-xs text-[var(--color-text-muted)]">{formatDate(t.date)}</p>
+                <div className="flex items-center gap-2 md:gap-3 shrink-0">
+                  <div className="hidden sm:block">
+                    <Badge category={t.category} />
+                  </div>
+                  <span
+                    className={`text-sm md:text-base font-mono font-bold ${
+                      t.type === 'income'
+                        ? 'text-[var(--color-accent-green)]'
+                        : 'text-[var(--color-accent-red)]'
+                    }`}
+                  >
+                    {t.type === 'income' ? '+' : '-'}
+                    {formatCurrency(t.amount)}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Badge category={t.category} />
-                <span
-                  className={`text-sm font-mono font-medium ${
-                    t.type === 'income'
-                      ? 'text-[var(--color-accent-green)]'
-                      : 'text-[var(--color-accent-red)]'
-                  }`}
-                >
-                  {t.type === 'income' ? '+' : '-'}
-                  {formatCurrency(t.amount)}
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Card>
     </PageWrapper>

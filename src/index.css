@@ -2,7 +2,7 @@
 
 /* ============================================
    MyMoney Design System — Design Tokens
-   Based on agents.md §4.1
+   Based on agents.md §4.1 (Dark Mode only)
    ============================================ */
 
 @theme {
@@ -10,20 +10,28 @@
   --color-bg-primary: #0a0a0a;
   --color-bg-secondary: #111111;
   --color-bg-tertiary: #1a1a1a;
-  --color-border-default: #2a2a2a;
-  --color-border-hover: #3a3a3a;
+  
+  /* Made borders slightly more subtle for a cleaner look */
+  --color-border-default: #222222;
+  --color-border-hover: #333333;
 
-  --color-text-primary: #f0f0f0;
-  --color-text-secondary: #a0a0a0;
+  --color-text-primary: #f8f8f8;
+  --color-text-secondary: #a8a8a8;
   --color-text-muted: #666666;
 
-  --color-accent-green: #00c896;
-  --color-accent-green-hover: #00b386;
-  --color-accent-green-glow: rgba(0, 200, 150, 0.15);
-  --color-accent-red: #ff4d6a;
-  --color-accent-red-glow: rgba(255, 77, 106, 0.15);
-  --color-accent-yellow: #ffb84d;
-  --color-accent-blue: #4d94ff;
+  /* Accent Colors */
+  --color-accent-green: #22c55e;
+  --color-accent-green-hover: #16a34a;
+  --color-accent-green-glow: rgba(34, 197, 94, 0.15);
+  
+  --color-accent-red: #ef4444;
+  --color-accent-red-glow: rgba(239, 68, 68, 0.15);
+  
+  --color-accent-yellow: #eab308;
+  --color-accent-yellow-glow: rgba(234, 179, 8, 0.15);
+  
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-glow: rgba(59, 130, 246, 0.15);
 
   /* Typography */
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -32,7 +40,7 @@
   /* Spacing scale */
   --spacing-page: 1.5rem;
 
-  /* Border radius */
+  /* Border radius - slightly softer */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
@@ -40,17 +48,16 @@
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.5);
+  /* Shadows - deeper and more professional */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 8px 32px -4px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 20px 40px -8px rgba(0, 0, 0, 0.6);
 
   /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
-  --transition-slow: 350ms ease;
-
-  /* Sidebar */
-  --sidebar-width: 14rem;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
@@ -69,6 +76,8 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   min-height: 100vh;
+  /* Add a very subtle radial gradient to the background to make it lively */
+  background-image: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.03) 0%, transparent 60%);
 }
 
 #root {
@@ -85,16 +94,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-primary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-default);
+  background: var(--color-border-hover);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-hover);
+  background: var(--color-text-muted);
 }
 
 /* ============================================
@@ -103,18 +112,7 @@ body {
 
 .font-mono {
   font-family: var(--font-mono);
-}
-
-.text-balance {
-  color: var(--color-accent-green);
-}
-
-.text-expense {
-  color: var(--color-accent-red);
-}
-
-.text-income {
-  color: var(--color-accent-green);
+  letter-spacing: -0.02em;
 }
 
 /* ============================================
@@ -124,7 +122,7 @@ body {
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -135,7 +133,7 @@ body {
 @keyframes slide-in-left {
   from {
     opacity: 0;
-    transform: translateX(-12px);
+    transform: translateX(-16px);
   }
   to {
     opacity: 1;
@@ -143,19 +141,16 @@ body {
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 var(--color-accent-green-glow);
-  }
-  50% {
-    box-shadow: 0 0 20px 4px var(--color-accent-green-glow);
-  }
-}
-
 .animate-fade-in {
-  animation: fade-in 0.4s ease-out both;
+  animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-slide-in {
-  animation: slide-in-left 0.3s ease-out both;
+  animation: slide-in-left 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* Subtle staggered animation for list items */
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }

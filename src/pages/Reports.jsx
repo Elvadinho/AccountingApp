@@ -60,53 +60,53 @@ export default function Reports() {
           </div>
           <div>
             <p className="text-xs text-[var(--color-text-muted)]">Top Spending Category</p>
-            <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+            <p className="text-sm font-semibold text-[var(--color-text-primary)] mt-0.5">
               {stats.highestCategory?.name || 'N/A'}
             </p>
-            <p className="text-xs font-mono text-[var(--color-accent-red)]">
+            <p className="text-base font-bold font-mono text-[var(--color-accent-red)] mt-0.5">
               {stats.highestCategory ? formatCurrency(stats.highestCategory.value) : '-'}
             </p>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-[var(--color-accent-green-glow)] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-[var(--color-accent-green-glow)] flex items-center justify-center shrink-0">
             <Award className="w-5 h-5 text-[var(--color-accent-green)]" />
           </div>
           <div>
             <p className="text-xs text-[var(--color-text-muted)]">Best Saving Month</p>
-            <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+            <p className="text-sm font-semibold text-[var(--color-text-primary)] mt-0.5">
               {stats.bestSavingMonth?.month || 'N/A'}
             </p>
-            <p className="text-xs font-mono text-[var(--color-accent-green)]">
+            <p className="text-base font-bold font-mono text-[var(--color-accent-green)] mt-0.5">
               {stats.bestSavingMonth ? formatCurrency(stats.bestSavingMonth.balance) : '-'}
             </p>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg" style={{ backgroundColor: 'rgba(77, 148, 255, 0.15)' }}>
+          <div className="w-10 h-10 rounded-lg shrink-0" style={{ backgroundColor: 'rgba(77, 148, 255, 0.15)' }}>
             <div className="w-full h-full flex items-center justify-center">
               <Calendar className="w-5 h-5 text-[var(--color-accent-blue)]" />
             </div>
           </div>
           <div>
             <p className="text-xs text-[var(--color-text-muted)]">Avg Monthly Income</p>
-            <p className="text-sm font-bold font-mono text-[var(--color-accent-green)]">
+            <p className="text-base font-bold font-mono text-[var(--color-accent-green)] mt-1">
               {formatCurrency(stats.avgMonthlyIncome)}
             </p>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg" style={{ backgroundColor: 'rgba(255, 184, 77, 0.15)' }}>
+          <div className="w-10 h-10 rounded-lg shrink-0" style={{ backgroundColor: 'rgba(255, 184, 77, 0.15)' }}>
             <div className="w-full h-full flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-[var(--color-accent-yellow)]" />
             </div>
           </div>
           <div>
             <p className="text-xs text-[var(--color-text-muted)]">Avg Monthly Expense</p>
-            <p className="text-sm font-bold font-mono text-[var(--color-accent-red)]">
+            <p className="text-base font-bold font-mono text-[var(--color-accent-red)] mt-1">
               {formatCurrency(stats.avgMonthlyExpense)}
             </p>
           </div>
@@ -143,7 +143,9 @@ export default function Reports() {
         <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4">
           Income vs Expenses (6 Months)
         </h2>
-        <BarChartComponent data={monthlyData} height={320} />
+        <div className="h-[320px] lg:h-[400px] w-full">
+          <BarChartComponent data={monthlyData} height="100%" />
+        </div>
       </Card>
     </PageWrapper>
   );

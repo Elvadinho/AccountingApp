@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 export default function Modal({ isOpen, onClose, title, children }) {
@@ -26,31 +27,32 @@ export default function Modal({ isOpen, onClose, title, children }) {
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       ref={overlayRef}
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
     >
-      <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-2xl w-full max-w-lg mx-4 shadow-[var(--shadow-elevated)] animate-fade-in">
+      <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg sm:mx-4 shadow-[var(--shadow-elevated)] animate-fade-in max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border-default)]">
-          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[var(--color-border-default)] sticky top-0 bg-[var(--color-bg-secondary)] z-10">
+          <h2 className="text-lg font-bold text-[var(--color-text-primary)]">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-[var(--color-bg-tertiary)] transition-colors cursor-pointer"
+            className="p-2 rounded-lg hover:bg-[var(--color-bg-tertiary)] transition-colors cursor-pointer -mr-1"
           >
             <X className="w-5 h-5 text-[var(--color-text-secondary)]" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="px-6 py-5">
+        <div className="px-5 sm:px-6 py-5">
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

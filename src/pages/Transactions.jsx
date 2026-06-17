@@ -80,7 +80,7 @@ function TransactionForm({ onSubmit, onClose }) {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          className="px-3 py-2.5 rounded-lg bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-1 focus:ring-[var(--color-accent-green)] transition-colors"
+          className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
         >
           <option value="">Select a category</option>
           {availableCategories.map((c) => (
@@ -146,7 +146,12 @@ export default function Transactions() {
   return (
     <PageWrapper title="Transactions">
       {/* Header Actions */}
-      <div className="flex flex-col md:flex-row gap-3 mb-6">
+      <div className="flex flex-col lg:flex-row gap-3 mb-6">
+        <Button variant="primary" onClick={() => setIsModalOpen(true)} className="lg:w-auto w-full">
+          <Plus className="w-4 h-4" />
+          Add Transaction
+        </Button>
+
         {/* Search */}
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]" />
@@ -160,11 +165,11 @@ export default function Transactions() {
         </div>
 
         {/* Filters */}
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] transition-colors"
+            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
@@ -175,24 +180,19 @@ export default function Transactions() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] transition-colors"
+            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
           >
             <option value="">All Types</option>
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
-
-          <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-            <Plus className="w-4 h-4" />
-            Add Transaction
-          </Button>
         </div>
       </div>
 
       {/* Transaction List */}
       <Card>
-        {/* Table Header */}
-        <div className="grid grid-cols-[1fr_120px_120px_100px_50px] gap-4 px-3 py-2 text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider border-b border-[var(--color-border-default)]">
+        {/* Table Header - Desktop Only */}
+        <div className="hidden md:grid grid-cols-[1fr_120px_120px_100px_40px] gap-4 px-4 py-3 text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]/30">
           <span>Description</span>
           <span>Date</span>
           <span>Category</span>
@@ -203,30 +203,60 @@ export default function Transactions() {
         {/* Transaction Rows */}
         <div className="divide-y divide-[var(--color-border-default)]">
           {filteredTransactions.length === 0 ? (
-            <div className="py-12 text-center">
-              <Filter className="w-10 h-10 text-[var(--color-text-muted)] mx-auto mb-3" />
-              <p className="text-sm text-[var(--color-text-secondary)]">No transactions found</p>
-              <p className="text-xs text-[var(--color-text-muted)] mt-1">
+            <div className="py-16 text-center animate-fade-in">
+              <div className="w-16 h-16 rounded-full bg-[var(--color-bg-tertiary)] flex items-center justify-center mx-auto mb-4">
+                <Filter className="w-8 h-8 text-[var(--color-text-muted)]" />
+              </div>
+              <p className="text-base font-medium text-[var(--color-text-primary)]">No transactions found</p>
+              <p className="text-sm text-[var(--color-text-secondary)] mt-1">
                 Try adjusting your search or filters
               </p>
             </div>
           ) : (
-            filteredTransactions.map((t) => (
+            filteredTransactions.map((t, index) => (
               <div
                 key={t.id}
-                className="grid grid-cols-[1fr_120px_120px_100px_50px] gap-4 items-center px-3 py-3 hover:bg-[var(--color-bg-tertiary)] transition-colors group"
+                className={`flex flex-col md:grid md:grid-cols-[1fr_120px_120px_100px_40px] gap-3 md:gap-4 md:items-center px-4 py-3.5 hover:bg-[var(--color-bg-tertiary)]/50 transition-colors group animate-fade-in stagger-${(index % 4) + 1}`}
               >
-                <div>
-                  <p className="text-sm font-medium text-[var(--color-text-primary)]">
+                {/* Mobile Top Row / Desktop Col 1 */}
+                <div className="flex justify-between md:block">
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)] line-clamp-1">
                     {t.description}
                   </p>
+                  {/* Mobile Amount (hidden on desktop) */}
+                  <span
+                    className={`md:hidden text-sm font-mono font-bold ${
+                      t.type === 'income'
+                        ? 'text-[var(--color-accent-green)]'
+                        : 'text-[var(--color-accent-red)]'
+                    }`}
+                  >
+                    {t.type === 'income' ? '+' : '-'}
+                    {t.amount.toLocaleString()}
+                  </span>
                 </div>
-                <span className="text-sm text-[var(--color-text-secondary)]">
-                  {formatDate(t.date)}
+
+                {/* Date */}
+                <span className="text-xs md:text-sm text-[var(--color-text-secondary)] flex items-center gap-2">
+                  <span className="md:hidden">Date:</span> {formatDate(t.date)}
                 </span>
-                <Badge category={t.category} />
+
+                {/* Category & Mobile Delete */}
+                <div className="flex justify-between items-center md:block mt-1 md:mt-0">
+                  <Badge category={t.category} />
+                  
+                  {/* Mobile Delete Button */}
+                  <button
+                    onClick={() => deleteTransaction(t.id)}
+                    className="md:hidden p-1.5 rounded-lg border border-[var(--color-border-default)] hover:bg-[var(--color-accent-red-glow)] hover:border-[var(--color-accent-red)] transition-all cursor-pointer"
+                  >
+                    <Trash2 className="w-4 h-4 text-[var(--color-accent-red)]" />
+                  </button>
+                </div>
+
+                {/* Desktop Amount */}
                 <span
-                  className={`text-sm font-mono font-medium text-right ${
+                  className={`hidden md:block text-sm font-mono font-semibold text-right ${
                     t.type === 'income'
                       ? 'text-[var(--color-accent-green)]'
                       : 'text-[var(--color-accent-red)]'
@@ -235,9 +265,11 @@ export default function Transactions() {
                   {t.type === 'income' ? '+' : '-'}
                   {t.amount.toLocaleString()}
                 </span>
+
+                {/* Desktop Delete Button */}
                 <button
                   onClick={() => deleteTransaction(t.id)}
-                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-[var(--color-accent-red-glow)] transition-all cursor-pointer"
+                  className="hidden md:flex opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-[var(--color-accent-red-glow)] transition-all cursor-pointer items-center justify-center"
                   title="Delete transaction"
                 >
                   <Trash2 className="w-4 h-4 text-[var(--color-accent-red)]" />

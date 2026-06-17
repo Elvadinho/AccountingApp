@@ -1,9 +1,6 @@
 export default function Input({
   label,
-  type = 'text',
-  value,
-  onChange,
-  placeholder = '',
+  error,
   className = '',
   id,
   ...props
@@ -22,13 +19,18 @@ export default function Input({
       )}
       <input
         id={inputId}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="px-3 py-2.5 rounded-lg bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-1 focus:ring-[var(--color-accent-green)] transition-colors"
+        className={`px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-tertiary)] border text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 shadow-inner ${
+          error
+            ? 'border-[var(--color-accent-red)] focus:border-[var(--color-accent-red)] focus:ring-[var(--color-accent-red-glow)]'
+            : 'border-[var(--color-border-default)] focus:border-[var(--color-accent-green)] focus:ring-[var(--color-accent-green-glow)] hover:border-[var(--color-border-hover)]'
+        }`}
         {...props}
       />
+      {error && (
+        <span className="text-xs text-[var(--color-accent-red)] font-medium animate-fade-in">
+          {error}
+        </span>
+      )}
     </div>
   );
 }
