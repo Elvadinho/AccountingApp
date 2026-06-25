@@ -6,7 +6,7 @@ import Button from '../components/ui/Button';
 import { useFinance } from '../context/FinanceContext';
 import { askClaude } from '../api/claude';
 
-const SYSTEM_PROMPT = `You are a financial assistant for a personal finance app called MyMoney. 
+const SYSTEM_PROMPT = `You are a financial assistant for a personal finance app called GereTonNkap. 
 Your goal is to help users manage their finances, answer questions about budgeting, and most importantly, parse expenses from natural language.
 
 If the user describes a transaction (e.g., "I spent 5000 on lunch today"), you should respond in a very specific way so the app can parse it.
@@ -32,7 +32,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hey there! 👋 I'm your MyMoney AI assistant. Tell me about any expense and I'll log it for you. Try: \"I spent 20,000 XAF on groceries yesterday\"",
+      content: "Hey there! 👋 I'm your GereTonNkap AI assistant. Tell me about any expense and I'll log it for you. Try: \"I spent 20,000 XAF on groceries yesterday\"",
     },
   ]);
   const [input, setInput] = useState('');
@@ -127,7 +127,7 @@ export default function AIAssistant() {
             <div>
               <p className="text-sm font-semibold text-[var(--color-text-primary)]">API Key Required</p>
               <p className="text-xs text-[var(--color-text-secondary)] mt-1">
-                Add <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded text-[var(--color-accent-green)] font-mono">VITE_CLAUDE_API_KEY</code> to your <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded font-mono">.env</code> file.
+                Add <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded text-[var(--color-accent-blue)] font-mono">VITE_CLAUDE_API_KEY</code> to your <code className="bg-[var(--color-bg-tertiary)] px-1.5 py-0.5 rounded font-mono">.env</code> file.
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function AIAssistant() {
                   className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                     msg.role === 'user'
                       ? 'bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)]'
-                      : 'bg-gradient-to-br from-[var(--color-accent-green)] to-[var(--color-accent-blue)] shadow-sm'
+                      : 'bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-blue)] shadow-sm'
                   }`}
                 >
                   {msg.role === 'user' ? (
@@ -163,7 +163,7 @@ export default function AIAssistant() {
                   <div
                     className={`px-4 py-3 rounded-2xl text-sm leading-relaxed break-words ${
                       msg.role === 'user'
-                        ? 'bg-[var(--color-accent-green)] text-[var(--color-bg-primary)] font-medium rounded-tr-md'
+                        ? 'bg-[var(--color-accent-blue)] text-[var(--color-bg-primary)] font-medium rounded-tr-md'
                         : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] rounded-tl-md'
                     }`}
                   >
@@ -174,7 +174,7 @@ export default function AIAssistant() {
                   {msg.parsedTransaction && (
                     <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-xl p-4 shadow-[var(--shadow-card)] w-full sm:w-72 animate-fade-in">
                       <div className="flex items-center gap-2 mb-3">
-                        <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-green)]" />
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-blue)]" />
                         <p className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider">
                           Suggested Transaction
                         </p>
@@ -207,7 +207,7 @@ export default function AIAssistant() {
                       </div>
 
                       {msg.transactionAdded ? (
-                        <div className="w-full py-2 rounded-lg bg-[var(--color-accent-green-glow)] text-[var(--color-accent-green)] text-sm font-medium flex items-center justify-center gap-2">
+                        <div className="w-full py-2 rounded-lg bg-[var(--color-accent-blue-glow)] text-[var(--color-accent-blue)] text-sm font-medium flex items-center justify-center gap-2">
                           <Check className="w-4 h-4" /> Added to Ledger ✓
                         </div>
                       ) : (
@@ -228,13 +228,13 @@ export default function AIAssistant() {
             {/* Loading State */}
             {isLoading && (
               <div className="flex gap-3 animate-fade-in">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-accent-green)] to-[var(--color-accent-blue)] flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-blue)] flex items-center justify-center shrink-0 shadow-sm">
                   <Bot className="w-4 h-4 text-white" />
                 </div>
                 <div className="px-5 py-3.5 rounded-2xl bg-[var(--color-bg-tertiary)] rounded-tl-md flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-green)] animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-blue)] animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-blue)] animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--color-accent-blue)] animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -248,7 +248,7 @@ export default function AIAssistant() {
                 <button
                   key={prompt}
                   onClick={() => setInput(prompt)}
-                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:border-[var(--color-accent-green)] hover:text-[var(--color-accent-green)] transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:border-[var(--color-accent-blue)] hover:text-[var(--color-accent-blue)] transition-all cursor-pointer"
                 >
                   {prompt}
                 </button>
@@ -264,13 +264,13 @@ export default function AIAssistant() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Tell me about an expense or ask a question..."
-                className="w-full pl-4 pr-12 py-3 rounded-xl bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all placeholder:text-[var(--color-text-muted)]"
+                className="w-full pl-4 pr-12 py-3 rounded-xl bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-blue)] focus:ring-2 focus:ring-[var(--color-accent-blue-glow)] transition-all placeholder:text-[var(--color-text-muted)]"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-[var(--color-accent-green)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-green-hover)] transition-all disabled:opacity-30 disabled:bg-transparent disabled:text-[var(--color-text-muted)] cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-[var(--color-accent-blue)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-blue-hover)] transition-all disabled:opacity-30 disabled:bg-transparent disabled:text-[var(--color-text-muted)] cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>

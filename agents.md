@@ -7,10 +7,10 @@
 
 ## 1. PROJECT OVERVIEW
 
-**Name:** MyMoney
+**Name:** GereTonNkap
 **Type:** Frontend Web Application (React + Vite, no backend)
 **Purpose:** A smart personal finance and small business accounting dashboard with AI-assisted expense management.
-**App Name (display):** MyMoney
+**App Name (display):** GereTonNkap
 **Target User:** Individual users and small business owners who want to track income, expenses, budgets, and get AI-powered financial insights.
 **Defense Context:** This is an academic software engineering defense project. The codebase must demonstrate clean architecture, UML-aligned design, and practical AI integration.
 
@@ -119,23 +119,23 @@ All data stored in `localStorage` as JSON.
 
 > Every agent and developer must use ONLY the values defined here. Do not invent new colors, fonts, or spacing outside this system.
 
-### 4.1 Color Palette — Dark Mode (Default & Only Mode)
+### 4.1 Color Palette — Light Mode (Soft White & Blue)
 
-Inspired by Supabase's ultra-dark aesthetic: deep neutral blacks, soft white text, and precise accent colors.
+Inspired by a modern, clean light aesthetic: soft white background, crisp text, and a primary soft blue accent.
 
 | Token                | Hex Value   | Usage                                          |
 |----------------------|-------------|------------------------------------------------|
-| `--bg-base`          | `#0a0a0a`   | Main app background                            |
-| `--bg-surface`       | `#111111`   | Cards, panels, sidebar                         |
-| `--bg-elevated`      | `#1a1a1a`   | Modals, dropdowns, hover states                |
-| `--border-subtle`    | `#2a2a2a`   | All dividers, card borders, input borders      |
-| `--border-default`   | `#3a3a3a`   | Focused or active borders                      |
-| `--text-primary`     | `#f0f0f0`   | Main headings and body text                    |
-| `--text-secondary`   | `#a0a0a0`   | Labels, captions, placeholders                 |
-| `--text-muted`       | `#555555`   | Disabled states, fine print                    |
-| `--accent-green`     | `#22c55e`   | Primary action buttons, income indicators, success |
-| `--accent-green-dim` | `#16a34a`   | Green button hover state                       |
-| `--accent-white`     | `#ffffff`   | Secondary buttons, icon buttons, outlines      |
+| `--bg-base`          | `#f8fafc`   | Main app background                            |
+| `--bg-surface`       | `#ffffff`   | Cards, panels, sidebar                         |
+| `--bg-elevated`      | `#f1f5f9`   | Modals, dropdowns, hover states                |
+| `--border-subtle`    | `#e2e8f0`   | All dividers, card borders, input borders      |
+| `--border-default`   | `#cbd5e1`   | Focused or active borders                      |
+| `--text-primary`     | `#0f172a`   | Main headings and body text                    |
+| `--text-secondary`   | `#475569`   | Labels, captions, placeholders                 |
+| `--text-muted`       | `#94a3b8`   | Disabled states, fine print                    |
+| `--accent-blue`      | `#3b82f6`   | Primary action buttons, success, main highlights |
+| `--accent-blue-dim`  | `#2563eb`   | Blue button hover state                        |
+| `--accent-white`     | `#ffffff`   | Secondary buttons, icon buttons                |
 | `--accent-red`       | `#ef4444`   | Expense indicators, errors, over-budget alerts |
 | `--accent-yellow`    | `#eab308`   | Warnings, "approaching limit" indicators       |
 
@@ -172,27 +172,27 @@ Use Tailwind's default scale. Maintain this discipline:
 
 Two button types only:
 
-**Primary (Green):**
+**Primary (Blue):**
 ```jsx
-<button className="bg-[#22c55e] hover:bg-[#16a34a] text-black font-semibold px-4 py-2 rounded-lg transition-colors">
+<button className="bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold px-4 py-2 rounded-lg transition-colors">
   Add Transaction
 </button>
 ```
 
 **Secondary (White Outline):**
 ```jsx
-<button className="border border-[#f0f0f0] text-[#f0f0f0] hover:bg-[#1a1a1a] px-4 py-2 rounded-lg transition-colors">
+<button className="border border-[#e2e8f0] text-[#0f172a] hover:bg-[#f1f5f9] px-4 py-2 rounded-lg transition-colors">
   Cancel
 </button>
 ```
 
-No other button styles. No colored backgrounds other than green for primary actions.
+No other button styles. No colored backgrounds other than blue for primary actions.
 
 ### 4.6 Card Component
 
 All stat cards and content panels follow this pattern:
 ```jsx
-<div className="bg-[#111111] border border-[#2a2a2a] rounded-xl p-5">
+<div className="bg-[#ffffff] border border-[#e2e8f0] rounded-xl p-5 shadow-sm">
   {/* content */}
 </div>
 ```
@@ -200,9 +200,9 @@ All stat cards and content panels follow this pattern:
 ### 4.7 Sidebar Layout
 
 - Fixed left sidebar, width: `w-56` (224px)
-- Background: `bg-[#0a0a0a]` with `border-r border-[#2a2a2a]`
-- Active nav item: `bg-[#1a1a1a] text-[#22c55e]` with a left green bar accent `border-l-2 border-[#22c55e]`
-- Inactive nav item: `text-[#a0a0a0] hover:text-[#f0f0f0] hover:bg-[#111111]`
+- Background: `bg-[#ffffff]` with `border-r border-[#e2e8f0]`
+- Active nav item: `bg-[#f1f5f9] text-[#3b82f6]` with a left blue bar accent `border-l-2 border-[#3b82f6]`
+- Inactive nav item: `text-[#475569] hover:text-[#0f172a] hover:bg-[#f8fafc]`
 
 ### 4.8 Page Layout Pattern
 
@@ -290,7 +290,7 @@ export async function askClaude(userMessage, systemPrompt) {
 ### 6.2 AI Assistant System Prompt
 
 ```
-You are MyMoney AI, a smart financial assistant embedded in a personal finance app.
+You are GereTonNkap AI, a smart financial assistant embedded in a personal finance app.
 Your job is to help users log expenses, understand their spending, and get financial insights.
 
 When the user describes a transaction (e.g. "I spent 5000 on food"), respond in this exact JSON format:

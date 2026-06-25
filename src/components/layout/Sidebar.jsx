@@ -5,7 +5,6 @@ import {
   PiggyBank,
   BarChart3,
   Bot,
-  Wallet,
 } from 'lucide-react';
 
 const navItems = [
@@ -19,17 +18,15 @@ const navItems = [
 export default function Sidebar({ isOpen }) {
   return (
     <aside 
-      className={`fixed left-0 top-0 bottom-0 w-56 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border-default)] flex flex-col z-50 transition-transform duration-300 ease-in-out ${
+      className={`fixed left-0 top-0 bottom-0 w-56 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border-default)] flex flex-col z-50 transition-transform duration-300 ease-in-out print:hidden ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}
     >
       {/* Logo */}
       <div className="px-5 py-6 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--color-accent-green)] to-[var(--color-accent-blue)] flex items-center justify-center shadow-lg shadow-[var(--color-accent-green-glow)]">
-          <Wallet className="w-5 h-5 text-[var(--color-bg-primary)]" />
-        </div>
+        <img src="/logo.svg" alt="GereTonNkap" className="w-9 h-9 rounded-xl shadow-lg shadow-[var(--color-accent-blue-glow)]" />
         <span className="text-xl font-bold text-[var(--color-text-primary)] tracking-tight">
-          MyMoney
+          GereTonNkap
         </span>
       </div>
 
@@ -44,7 +41,7 @@ export default function Sidebar({ isOpen }) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                     isActive
-                      ? 'bg-[var(--color-accent-green-glow)] text-[var(--color-accent-green)]'
+                      ? 'bg-[var(--color-accent-blue-glow)] text-[var(--color-accent-blue)]'
                       : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-tertiary)]'
                   }`
                 }
@@ -71,7 +68,7 @@ export default function Sidebar({ isOpen }) {
           </div>
           <div>
             <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-              MyMoney Pro
+              GereTonNkap Pro
             </p>
             <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
               v1.0.0

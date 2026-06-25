@@ -32,7 +32,7 @@ export default function Layout({ children }) {
         <Sidebar isOpen={isSidebarOpen} />
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 md:ml-56 transition-all duration-300">
+        <div className="flex-1 flex flex-col min-w-0 md:ml-56 transition-all duration-300 print:ml-0">
           {children}
         </div>
       </div>

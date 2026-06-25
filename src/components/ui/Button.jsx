@@ -12,11 +12,11 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-[var(--color-accent-green)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-green-hover)] focus:ring-[var(--color-accent-green-glow)] shadow-sm hover:shadow-md',
+      'bg-[var(--color-accent-blue)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-blue-hover)] focus:ring-[var(--color-accent-blue-glow)] shadow-sm hover:shadow-md',
     secondary:
       'bg-transparent border border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:border-[var(--color-border-hover)] hover:bg-[var(--color-bg-tertiary)] focus:ring-[var(--color-border-hover)]',
     danger:
-      'bg-transparent border border-[var(--color-accent-red)]/40 text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red-glow)] focus:ring-[var(--color-accent-red-glow)]',
+      'bg-transparent border border-[var(--color-finance-expense)]/40 text-[var(--color-finance-expense)] hover:bg-[var(--color-finance-expense-glow)] focus:ring-[var(--color-finance-expense-glow)]',
     ghost:
       'bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-tertiary)]',
   };

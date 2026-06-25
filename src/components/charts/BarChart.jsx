@@ -47,8 +47,8 @@ export default function BarChartComponent({ data, height = 300 }) {
         <Legend
           wrapperStyle={{ fontSize: '11px', color: 'var(--color-text-secondary)', paddingTop: '8px' }}
         />
-        <Bar dataKey="income" name="Income" fill="var(--color-accent-green)" radius={[6, 6, 0, 0]} maxBarSize={60} />
-        <Bar dataKey="expenses" name="Expenses" fill="var(--color-accent-red)" radius={[6, 6, 0, 0]} opacity={0.8} maxBarSize={60} />
+        <Bar dataKey="income" name="Income" fill="var(--color-finance-income)" radius={[6, 6, 0, 0]} maxBarSize={60} />
+        <Bar dataKey="expenses" name="Expenses" fill="var(--color-finance-expense)" radius={[6, 6, 0, 0]} opacity={0.8} maxBarSize={60} />
       </RechartsBarChart>
     </ResponsiveContainer>
   );

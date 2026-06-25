@@ -21,13 +21,13 @@ export default function Input({
         id={inputId}
         className={`px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-tertiary)] border text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 shadow-inner ${
           error
-            ? 'border-[var(--color-accent-red)] focus:border-[var(--color-accent-red)] focus:ring-[var(--color-accent-red-glow)]'
-            : 'border-[var(--color-border-default)] focus:border-[var(--color-accent-green)] focus:ring-[var(--color-accent-green-glow)] hover:border-[var(--color-border-hover)]'
+            ? 'border-[var(--color-finance-expense)] focus:border-[var(--color-finance-expense)] focus:ring-[var(--color-finance-expense-glow)]'
+            : 'border-[var(--color-border-default)] focus:border-[var(--color-accent-blue)] focus:ring-[var(--color-accent-blue-glow)] hover:border-[var(--color-border-hover)]'
         }`}
         {...props}
       />
       {error && (
-        <span className="text-xs text-[var(--color-accent-red)] font-medium animate-fade-in">
+        <span className="text-xs text-[var(--color-finance-expense)] font-medium animate-fade-in">
           {error}
         </span>
       )}

@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
-  <text x="16" y="23" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#00c896" text-anchor="middle">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="url(#fav-bg)"/>
+  <!-- Simplified wallet shape -->
+  <rect x="7" y="11" width="15" height="12" rx="2.5" fill="white" opacity="0.95"/>
+  <!-- Trend arrow -->
+  <path d="M16 10 L22 5.5 L26 5.5" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 8 L26 5.5 L24 3" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Mini bars -->
+  <rect x="10" y="25" width="2.5" height="3" rx="0.75" fill="#3b82f6" opacity="0.6"/>
+  <rect x="14" y="23.5" width="2.5" height="4.5" rx="0.75" fill="#3b82f6" opacity="0.8"/>
+  <rect x="18" y="22" width="2.5" height="6" rx="0.75" fill="#10b981"/>
+  <defs>
+    <linearGradient id="fav-bg" x1="0" y1="0" x2="32" y2="32">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+  </defs>
 </svg>

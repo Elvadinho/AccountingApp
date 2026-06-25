@@ -11,8 +11,8 @@ const FinanceContext = createContext(null);
  * Provides computed values (totals, savings rate) and CRUD functions.
  */
 export function FinanceProvider({ children }) {
-  const [transactions, setTransactions] = useLocalStorage('mymoney_transactions', seedTransactions);
-  const [budgets, setBudgets] = useLocalStorage('mymoney_budgets', seedBudgets);
+  const [transactions, setTransactions] = useLocalStorage('geretonnkap_transactions', seedTransactions);
+  const [budgets, setBudgets] = useLocalStorage('geretonnkap_budgets', seedBudgets);
 
   // --- CRUD Operations ---
 
@@ -38,6 +38,10 @@ export function FinanceProvider({ children }) {
       }
       return [...prev, { category, limit }];
     });
+  }
+
+  function deleteBudget(category) {
+    setBudgets((prev) => prev.filter((b) => b.category !== category));
   }
 
   function resetAllData() {
@@ -143,6 +147,7 @@ export function FinanceProvider({ children }) {
     addTransaction,
     deleteTransaction,
     updateBudget,
+    deleteBudget,
     resetAllData,
     restoreMockData,
     setBudgets,

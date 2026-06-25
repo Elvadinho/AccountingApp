@@ -43,7 +43,7 @@ function TransactionForm({ onSubmit, onClose }) {
           onClick={() => { setType('expense'); setCategory(''); }}
           className={`flex-1 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
             type === 'expense'
-              ? 'bg-[var(--color-accent-red)] text-white'
+              ? 'bg-[var(--color-finance-expense)] text-white'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
           }`}
         >
@@ -54,7 +54,7 @@ function TransactionForm({ onSubmit, onClose }) {
           onClick={() => { setType('income'); setCategory(''); }}
           className={`flex-1 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
             type === 'income'
-              ? 'bg-[var(--color-accent-green)] text-white'
+              ? 'bg-[var(--color-finance-income)] text-white'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
           }`}
         >
@@ -80,7 +80,7 @@ function TransactionForm({ onSubmit, onClose }) {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
+          className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm focus:outline-none focus:border-[var(--color-accent-blue)] focus:ring-2 focus:ring-[var(--color-accent-blue-glow)] transition-all shadow-inner"
         >
           <option value="">Select a category</option>
           {availableCategories.map((c) => (
@@ -160,7 +160,7 @@ export default function Transactions() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search transactions..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-green)] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
           />
         </div>
 
@@ -169,7 +169,7 @@ export default function Transactions() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
+            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-blue)] focus:ring-2 focus:ring-[var(--color-accent-blue-glow)] transition-all shadow-inner"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
@@ -180,7 +180,7 @@ export default function Transactions() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-green)] focus:ring-2 focus:ring-[var(--color-accent-green-glow)] transition-all shadow-inner"
+            className="px-3 py-2.5 rounded-[var(--radius-lg)] bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] text-sm focus:outline-none focus:border-[var(--color-accent-blue)] focus:ring-2 focus:ring-[var(--color-accent-blue-glow)] transition-all shadow-inner"
           >
             <option value="">All Types</option>
             <option value="income">Income</option>
@@ -227,8 +227,8 @@ export default function Transactions() {
                   <span
                     className={`md:hidden text-sm font-mono font-bold ${
                       t.type === 'income'
-                        ? 'text-[var(--color-accent-green)]'
-                        : 'text-[var(--color-accent-red)]'
+                        ? 'text-[var(--color-finance-income)]'
+                        : 'text-[var(--color-finance-expense)]'
                     }`}
                   >
                     {t.type === 'income' ? '+' : '-'}
@@ -248,9 +248,9 @@ export default function Transactions() {
                   {/* Mobile Delete Button */}
                   <button
                     onClick={() => deleteTransaction(t.id)}
-                    className="md:hidden p-1.5 rounded-lg border border-[var(--color-border-default)] hover:bg-[var(--color-accent-red-glow)] hover:border-[var(--color-accent-red)] transition-all cursor-pointer"
+                    className="md:hidden p-1.5 rounded-lg border border-[var(--color-border-default)] hover:bg-[var(--color-finance-expense-glow)] hover:border-[var(--color-finance-expense)] transition-all cursor-pointer"
                   >
-                    <Trash2 className="w-4 h-4 text-[var(--color-accent-red)]" />
+                    <Trash2 className="w-4 h-4 text-[var(--color-finance-expense)]" />
                   </button>
                 </div>
 
@@ -258,8 +258,8 @@ export default function Transactions() {
                 <span
                   className={`hidden md:block text-sm font-mono font-semibold text-right ${
                     t.type === 'income'
-                      ? 'text-[var(--color-accent-green)]'
-                      : 'text-[var(--color-accent-red)]'
+                      ? 'text-[var(--color-finance-income)]'
+                      : 'text-[var(--color-finance-expense)]'
                   }`}
                 >
                   {t.type === 'income' ? '+' : '-'}
@@ -269,10 +269,9 @@ export default function Transactions() {
                 {/* Desktop Delete Button */}
                 <button
                   onClick={() => deleteTransaction(t.id)}
-                  className="hidden md:flex opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-[var(--color-accent-red-glow)] transition-all cursor-pointer items-center justify-center"
-                  title="Delete transaction"
+                  className="hidden md:flex opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-[var(--color-finance-expense-glow)] transition-all cursor-pointer items-center justify-center"
                 >
-                  <Trash2 className="w-4 h-4 text-[var(--color-accent-red)]" />
+                  <Trash2 className="w-4 h-4 text-[var(--color-finance-expense)]" />
                 </button>
               </div>
             ))

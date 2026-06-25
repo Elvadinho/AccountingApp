@@ -6,32 +6,42 @@
    ============================================ */
 
 @theme {
-  /* Colors — Dark Mode Palette */
-  --color-bg-primary: #0a0a0a;
-  --color-bg-secondary: #111111;
-  --color-bg-tertiary: #1a1a1a;
+  /* Colors — Light Mode Palette */
+  --color-bg-primary: #f8fafc;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f1f5f9;
   
-  /* Made borders slightly more subtle for a cleaner look */
-  --color-border-default: #222222;
-  --color-border-hover: #333333;
+  --color-border-default: #e2e8f0;
+  --color-border-hover: #cbd5e1;
 
-  --color-text-primary: #f8f8f8;
-  --color-text-secondary: #a8a8a8;
-  --color-text-muted: #666666;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
 
-  /* Accent Colors */
-  --color-accent-green: #22c55e;
-  --color-accent-green-hover: #16a34a;
-  --color-accent-green-glow: rgba(34, 197, 94, 0.15);
+  /* Interactive Accent Colors */
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-hover: #2563eb;
+  --color-accent-blue-glow: rgba(59, 130, 246, 0.15);
+  
+  /* Semantic Finance Colors */
+  --color-finance-income: #10b981; /* Soft Emerald */
+  --color-finance-income-glow: rgba(16, 185, 129, 0.15);
+  
+  --color-finance-expense: #f43f5e; /* Warm Coral/Rose */
+  --color-finance-expense-glow: rgba(244, 63, 94, 0.15);
+  
+  --color-finance-balance: #6366f1; /* Rich Indigo */
+  --color-finance-balance-glow: rgba(99, 102, 241, 0.15);
+  
+  --color-finance-savings: #14b8a6; /* Teal */
+  
+  /* Legacy/Status Colors (Keep for warnings if needed) */
   
   --color-accent-red: #ef4444;
   --color-accent-red-glow: rgba(239, 68, 68, 0.15);
   
   --color-accent-yellow: #eab308;
   --color-accent-yellow-glow: rgba(234, 179, 8, 0.15);
-  
-  --color-accent-blue: #3b82f6;
-  --color-accent-blue-glow: rgba(59, 130, 246, 0.15);
 
   /* Typography */
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -48,11 +58,11 @@
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 
-  /* Shadows - deeper and more professional */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
-  --shadow-card-hover: 0 8px 32px -4px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 20px 40px -8px rgba(0, 0, 0, 0.6);
+  /* Shadows - softer for light mode */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-card: 0 4px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 8px 32px -4px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+  --shadow-elevated: 0 20px 40px -8px rgba(15, 23, 42, 0.15);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -77,7 +87,7 @@ body {
   color: var(--color-text-primary);
   min-height: 100vh;
   /* Add a very subtle radial gradient to the background to make it lively */
-  background-image: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.03) 0%, transparent 60%);
+  background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
 }
 
 #root {

@@ -10,6 +10,7 @@ import PageWrapper from '../components/layout/PageWrapper';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import BarChartComponent from '../components/charts/BarChart';
+import AreaChartComponent from '../components/charts/AreaChart';
 import { useFinance } from '../context/FinanceContext';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import { getCategoryByName, getCategoryColor } from '../utils/categories';
@@ -27,7 +28,7 @@ function StatCard({ icon: Icon, label, value, trend, trendLabel, color }) {
         {trend !== undefined && (
           <span
             className={`flex items-center gap-0.5 text-xs font-medium ${
-              trend >= 0 ? 'text-[var(--color-accent-green)]' : 'text-[var(--color-accent-red)]'
+              trend >= 0 ? 'text-[var(--color-finance-income)]' : 'text-[var(--color-finance-expense)]'
             }`}
           >
             {trend >= 0 ? (
@@ -56,10 +57,10 @@ function BudgetProgressBar({ category, spent, limit }) {
   const catColor = getCategoryColor(category);
   const barColor =
     percentage >= 100
-      ? 'var(--color-accent-red)'
+      ? 'var(--color-finance-expense)'
       : percentage >= 70
         ? 'var(--color-accent-yellow)'
-        : 'var(--color-accent-green)';
+        : 'var(--color-finance-income)';
 
   return (
     <div className="flex items-center gap-3">
@@ -104,25 +105,25 @@ export default function Dashboard() {
           icon={Wallet}
           label="Net Balance"
           value={formatCurrency(balance)}
-          color={balance >= 0 ? 'var(--color-accent-green)' : 'var(--color-accent-red)'}
+          color="var(--color-finance-balance)"
         />
         <StatCard
           icon={TrendingUp}
           label="Total Income"
           value={formatCurrency(totalIncome)}
-          color="var(--color-accent-green)"
+          color="var(--color-finance-income)"
         />
         <StatCard
           icon={TrendingDown}
           label="Total Expenses"
           value={formatCurrency(totalExpenses)}
-          color="var(--color-accent-red)"
+          color="var(--color-finance-expense)"
         />
         <StatCard
           icon={PiggyBank}
           label="Savings Rate"
           value={`${Math.round(savingsRate * 100)}%`}
-          color="var(--color-accent-blue)"
+          color="var(--color-finance-savings)"
         />
       </div>
 
@@ -155,6 +156,16 @@ export default function Dashboard() {
           </div>
         </Card>
       </div>
+
+      {/* Net Worth Trend */}
+      <Card className="mt-4">
+        <h2 className="text-base font-semibold text-[var(--color-text-primary)] mb-4">
+          Net Worth Trend (6 Months)
+        </h2>
+        <div className="h-[250px] w-full">
+          <AreaChartComponent data={monthlyData} height="100%" />
+        </div>
+      </Card>
 
       {/* Recent Transactions */}
       <Card className="mt-4">
@@ -201,8 +212,8 @@ export default function Dashboard() {
                   <span
                     className={`text-sm md:text-base font-mono font-bold ${
                       t.type === 'income'
-                        ? 'text-[var(--color-accent-green)]'
-                        : 'text-[var(--color-accent-red)]'
+                        ? 'text-[var(--color-finance-income)]'
+                        : 'text-[var(--color-finance-expense)]'
                     }`}
                   >
                     {t.type === 'income' ? '+' : '-'}
